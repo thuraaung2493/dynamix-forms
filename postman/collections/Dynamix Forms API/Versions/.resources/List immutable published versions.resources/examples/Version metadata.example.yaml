@@ -1,0 +1,45 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/forms/:formId/versions"
+  method: GET
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  pathVariables:
+    - key: formId
+      value: 5aba8808-fd43-9a01-2a88-a31c002c4ac9
+      disabled: false
+      description: "(Required) "
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "versions": [
+          {
+            "id": "bd6b0fc7-9687-eb3b-4db3-2cacf7b94ef6",
+            "version": 7286,
+            "schemaVersion": 1841,
+            "publishedBy": "a4554fe2-34c2-0a99-19b2-e7b98bb1196b",
+            "publishedAt": "2016-03-17T00:42:05.970Z"
+          },
+          {
+            "id": "19057979-9ff0-05f8-4843-7748aad2cffc",
+            "version": 14,
+            "schemaVersion": 1140,
+            "publishedBy": "9ad51286-da1c-415a-d74e-751a7dcb3d54",
+            "publishedAt": "1956-09-22T04:51:25.899Z"
+          }
+        ]
+      }
+order: 1000

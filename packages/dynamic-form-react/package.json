@@ -1,0 +1,54 @@
+{
+  "name": "@thuraaung2493/dynamic-form-react",
+  "version": "0.1.0-beta.0",
+  "description": "React renderer and hooks for Dynamix Forms",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuraaung2493/dynamix-forms.git",
+    "directory": "packages/dynamic-form-react"
+  },
+  "homepage": "https://github.com/thuraaung2493/dynamix-forms#readme",
+  "bugs": "https://github.com/thuraaung2493/dynamix-forms/issues",
+  "type": "module",
+  "sideEffects": [
+    "./styles.css"
+  ],
+  "files": [
+    "dist",
+    "styles.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"import('node:fs/promises').then(({ rm }) => Promise.all(['dist', '.cache'].map((path) => rm(path, { recursive: true, force: true }))))\"",
+    "prepack": "npm run build --workspace @thuraaung2493/dynamic-form-core && npm run clean && npm run build",
+    "pretest": "npm run build --workspace @thuraaung2493/dynamic-form-core",
+    "pretypecheck": "npm run build --workspace @thuraaung2493/dynamic-form-core",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@thuraaung2493/dynamic-form-core": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0 <20.0.0",
+    "react-dom": ">=18.2.0 <20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "beta"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

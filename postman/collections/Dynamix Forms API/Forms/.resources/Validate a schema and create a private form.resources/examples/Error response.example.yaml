@@ -1,0 +1,50 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/forms/import"
+  method: POST
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "key": "customer-details",
+        "schema": {
+          "schemaVersion": {},
+          "id": "string",
+          "fields": [
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            }
+          ],
+          "title": "string"
+        },
+        "title": "Customer details"
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "details": ""
+        }
+      }
+order: 2000

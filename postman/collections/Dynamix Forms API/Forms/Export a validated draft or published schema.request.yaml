@@ -1,0 +1,23 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/forms/:formId/export?source=draft&version=8327"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  source: draft
+  version: "8327"
+pathVariables:
+  - key: formId
+    value: 5aba8808-fd43-9a01-2a88-a31c002c4ac9
+    disabled: false
+    description: "(Required) "
+auth:
+  type: apikey
+  credentials:
+    key: dynamix_session
+    value: "{{apiKey}}"
+    in: header
+settings: {}
+examples: ./.resources/Export a validated draft or published schema.resources/examples
+order: 8000

@@ -1,0 +1,41 @@
+{
+  "name": "@thuraaung2493/dynamic-form-core",
+  "version": "0.1.0-beta.0",
+  "description": "Framework-independent schema and form engine utilities for Dynamix Forms",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuraaung2493/dynamix-forms.git",
+    "directory": "packages/dynamic-form-core"
+  },
+  "homepage": "https://github.com/thuraaung2493/dynamix-forms#readme",
+  "bugs": "https://github.com/thuraaung2493/dynamix-forms/issues",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"import('node:fs/promises').then(({ rm }) => Promise.all(['dist', '.cache'].map((path) => rm(path, { recursive: true, force: true }))))\"",
+    "prepack": "npm run clean && npm run build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "beta"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

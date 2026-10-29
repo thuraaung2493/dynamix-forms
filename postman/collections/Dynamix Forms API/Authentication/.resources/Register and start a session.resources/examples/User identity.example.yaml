@@ -1,0 +1,30 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/auth/register"
+  method: POST
+  headers:
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "email": "owner@example.com",
+        "displayName": "Form Owner",
+        "password": "valid-passwordA!"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "user": {
+          "id": "1978ec82-de98-b976-0acc-b4c9fc5f6cf2",
+          "email": "kVrpfXiiO7e@QpteNRRleTXJoAadTwSxuuYYAuLWSKnd.bvax",
+          "displayName": "string"
+        }
+      }
+order: 1000

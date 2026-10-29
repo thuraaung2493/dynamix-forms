@@ -1,0 +1,17 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "owner@example.com",
+      "password": "valid-passwordA!"
+    }
+settings: {}
+examples: ./.resources/Start a session.resources/examples
+order: 2000

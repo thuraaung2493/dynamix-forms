@@ -1,0 +1,7 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/auth/logout"
+method: POST
+settings: {}
+examples: ./.resources/End the current session.resources/examples
+order: 3000

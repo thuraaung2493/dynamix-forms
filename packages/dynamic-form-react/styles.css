@@ -1,0 +1,160 @@
+.df-native,
+.df-bootstrap {
+  display: grid;
+  gap: 1rem;
+}
+
+.df-native__field,
+.df-bootstrap__field {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.df-native__field--nested,
+.df-bootstrap__field--nested {
+  border-inline-start: 2px solid #d1d5db;
+  margin-block-start: 0.75rem;
+  margin-inline-start: 0.5rem;
+  padding-inline-start: 1rem;
+}
+
+.df-native__label,
+.df-bootstrap__label {
+  color: #111827;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.df-native__control,
+.df-bootstrap__control {
+  background: #fff;
+  border: 1px solid #9ca3af;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  color: #111827;
+  font: inherit;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+}
+
+.df-native__control:is(select):not([multiple]),
+.df-bootstrap__control:is(select):not([multiple]) {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-position: right 0.875rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  padding-inline-end: 2.5rem;
+}
+
+.df-native__control:focus,
+.df-bootstrap__control:focus {
+  border-color: #2563eb;
+  outline: 2px solid color-mix(in srgb, #2563eb 30%, transparent);
+  outline-offset: 1px;
+}
+
+.df-native__control[aria-invalid='true'],
+.df-bootstrap__control[aria-invalid='true'] {
+  border-color: #dc2626;
+}
+
+.df-native__checkbox,
+.df-bootstrap__checkbox {
+  height: 1rem;
+  width: 1rem;
+}
+
+.df-native__options,
+.df-bootstrap__options {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.df-native__option,
+.df-bootstrap__option {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.df-native__help,
+.df-bootstrap__help {
+  color: #4b5563;
+  font-size: 0.8125rem;
+}
+
+.df-native__errors,
+.df-bootstrap__errors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.df-native__error,
+.df-bootstrap__error,
+.df-native__form-error,
+.df-bootstrap__form-error {
+  color: #b91c1c;
+  font-size: 0.8125rem;
+}
+
+.df-native__form-error,
+.df-bootstrap__form-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+}
+
+.df-native__button,
+.df-bootstrap__button {
+  background: #1d4ed8;
+  border: 0;
+  border-radius: 0.375rem;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  justify-self: start;
+  padding: 0.625rem 1rem;
+}
+
+.df-native__button:disabled,
+.df-bootstrap__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.df-native__calculation,
+.df-bootstrap__calculation {
+  background: #f3f4f6;
+  border-radius: 0.375rem;
+  min-height: 2.5rem;
+  padding: 0.625rem 0.75rem;
+}
+
+.df-native__preview,
+.df-bootstrap__preview {
+  border-radius: 0.375rem;
+  height: auto;
+  max-height: 12rem;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Bootstrap-like spacing without requiring or overriding Bootstrap itself. */
+.df-bootstrap__field {
+  margin-bottom: 1rem;
+}
+
+.df-bootstrap__control {
+  border-color: #dee2e6;
+  border-radius: 0.375rem;
+}
+
+.df-bootstrap__button {
+  background: #0d6efd;
+}
+

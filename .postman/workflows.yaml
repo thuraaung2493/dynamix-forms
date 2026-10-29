@@ -1,0 +1,6 @@
+workflows:
+  syncSpecToCollection:
+    - spec: ../apps/form-builder-api/openapi.yaml
+      collection: ../postman/collections/Dynamix Forms API
+      options:
+        folderStrategy: Tags

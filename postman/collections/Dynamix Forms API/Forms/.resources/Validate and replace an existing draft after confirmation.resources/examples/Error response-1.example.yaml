@@ -1,0 +1,57 @@
+$kind: http-example
+name: Error response
+request:
+  url: "{{baseUrl}}/api/forms/:formId/import"
+  method: PUT
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  pathVariables:
+    - key: formId
+      value: 5aba8808-fd43-9a01-2a88-a31c002c4ac9
+      disabled: false
+      description: "(Required) "
+  body:
+    type: json
+    content: |-
+      {
+        "confirmReplace": {},
+        "expectedRevision": 7431,
+        "schema": {
+          "schemaVersion": {},
+          "id": "string",
+          "fields": [
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            }
+          ],
+          "title": "string"
+        },
+        "title": "string"
+      }
+response:
+  statusCode: 409
+  statusText: Conflict
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "details": ""
+        }
+      }
+order: 3000

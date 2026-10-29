@@ -1,0 +1,58 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/forms/:formId/publish"
+  method: POST
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  pathVariables:
+    - key: formId
+      value: 5aba8808-fd43-9a01-2a88-a31c002c4ac9
+      disabled: false
+      description: "(Required) "
+  body:
+    type: json
+    content: |-
+      {
+        "expectedRevision": 180
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "version": {
+          "createdAt": "2019-01-03T15:27:44.683Z",
+          "formId": "ee4e7874-a92a-f800-6cd3-fa81253c3ac5",
+          "id": "b5b48332-eefc-8a3f-8645-371335a51151",
+          "publishedAt": "2025-07-22T02:24:43.302Z",
+          "publishedBy": "747b7b70-447c-230f-1229-9dde30d86413",
+          "schema": {
+            "schemaVersion": {},
+            "id": "string",
+            "fields": [
+              {
+                "name": "string",
+                "type": "string",
+                "label": "string"
+              },
+              {
+                "name": "string",
+                "type": "string",
+                "label": "string"
+              }
+            ],
+            "title": "string"
+          },
+          "schemaVersion": 7780,
+          "version": 3609
+        }
+      }
+order: 1000

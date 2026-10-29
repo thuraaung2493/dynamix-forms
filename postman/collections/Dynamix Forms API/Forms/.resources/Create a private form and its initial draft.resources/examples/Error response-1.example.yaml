@@ -1,0 +1,51 @@
+$kind: http-example
+name: Error response
+request:
+  url: "{{baseUrl}}/api/forms"
+  method: POST
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "key": "customer-details",
+        "title": "Customer details",
+        "schema": {
+          "schemaVersion": {},
+          "id": "string",
+          "fields": [
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            }
+          ],
+          "title": "string"
+        }
+      }
+response:
+  statusCode: 409
+  statusText: Conflict
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "error": {
+          "code": "string",
+          "message": "string",
+          "details": ""
+        }
+      }
+order: 3000

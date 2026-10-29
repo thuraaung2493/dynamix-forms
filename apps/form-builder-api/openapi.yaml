@@ -1,0 +1,494 @@
+openapi: 3.1.0
+info:
+  title: Dynamix Forms API
+  version: 0.1.0
+  description: Private form authoring API with one working draft and immutable published versions.
+servers:
+  - url: http://localhost:3001
+    description: Local development
+tags:
+  - name: System
+  - name: Authentication
+  - name: Forms
+  - name: Versions
+paths:
+  /health:
+    get:
+      tags: [System]
+      operationId: getHealth
+      summary: Check API health
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { const: ok }
+  /api/auth/register:
+    post:
+      tags: [Authentication]
+      operationId: register
+      summary: Register and start a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RegisterInput' }
+      responses:
+        '201': { $ref: '#/components/responses/UserResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/auth/login:
+    post:
+      tags: [Authentication]
+      operationId: login
+      summary: Start a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginInput' }
+      responses:
+        '200': { $ref: '#/components/responses/UserResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '401': { $ref: '#/components/responses/ApiError' }
+  /api/auth/logout:
+    post:
+      tags: [Authentication]
+      operationId: logout
+      summary: End the current session
+      responses:
+        '204': { description: Session ended }
+  /api/auth/me:
+    get:
+      tags: [Authentication]
+      operationId: getCurrentUser
+      summary: Get the authenticated user
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { $ref: '#/components/responses/UserResponse' }
+        '401': { $ref: '#/components/responses/ApiError' }
+  /api/forms:
+    get:
+      tags: [Forms]
+      operationId: listForms
+      summary: List the owner's active or deleted forms
+      security: [{ sessionCookie: [] }]
+      parameters:
+        - in: query
+          name: deleted
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: Form summaries
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [forms]
+                properties:
+                  forms:
+                    type: array
+                    items: { $ref: '#/components/schemas/FormSummary' }
+        '401': { $ref: '#/components/responses/ApiError' }
+    post:
+      tags: [Forms]
+      operationId: createForm
+      summary: Create a private form and its initial draft
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateFormInput' }
+      responses:
+        '201': { $ref: '#/components/responses/FormResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/import:
+    post:
+      tags: [Forms]
+      operationId: importNewForm
+      summary: Validate a schema and create a private form
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - { $ref: '#/components/schemas/CreateFormInput' }
+                - type: object
+                  required: [schema]
+      responses:
+        '201': { $ref: '#/components/responses/FormResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    get:
+      tags: [Forms]
+      operationId: getForm
+      summary: Get an active form and working draft
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '404': { $ref: '#/components/responses/ApiError' }
+    delete:
+      tags: [Forms]
+      operationId: softDeleteForm
+      summary: Move a form to deleted forms
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '404': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/draft:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    put:
+      tags: [Forms]
+      operationId: saveDraft
+      summary: Replace a valid working draft using optimistic locking
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SaveDraftInput' }
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/import:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    put:
+      tags: [Forms]
+      operationId: importExistingDraft
+      summary: Validate and replace an existing draft after confirmation
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - { $ref: '#/components/schemas/SaveDraftInput' }
+                - type: object
+                  required: [confirmReplace]
+                  properties:
+                    confirmReplace: { const: true }
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/publish:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    post:
+      tags: [Versions]
+      operationId: publishForm
+      summary: Atomically publish the current draft as an immutable version
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RevisionInput' }
+      responses:
+        '201': { $ref: '#/components/responses/VersionResponse' }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/versions:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    get:
+      tags: [Versions]
+      operationId: listVersions
+      summary: List immutable published versions
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200':
+          description: Version metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [versions]
+                properties:
+                  versions:
+                    type: array
+                    items: { $ref: '#/components/schemas/VersionSummary' }
+  /api/forms/{formId}/versions/{version}:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+      - { $ref: '#/components/parameters/Version' }
+    get:
+      tags: [Versions]
+      operationId: getVersion
+      summary: Get an immutable published version
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { $ref: '#/components/responses/VersionResponse' }
+        '404': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/versions/{version}/restore:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+      - { $ref: '#/components/parameters/Version' }
+    post:
+      tags: [Versions]
+      operationId: restoreVersion
+      summary: Copy a published version into the working draft
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RevisionInput' }
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/export:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    get:
+      tags: [Forms]
+      operationId: exportForm
+      summary: Export a validated draft or published schema
+      security: [{ sessionCookie: [] }]
+      parameters:
+        - in: query
+          name: source
+          schema: { type: string, enum: [draft, published], default: draft }
+        - in: query
+          name: version
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Form schema JSON attachment
+          headers:
+            Content-Disposition:
+              schema: { type: string }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FormSchema' }
+        '404': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/restore-deleted:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    post:
+      tags: [Forms]
+      operationId: restoreDeletedForm
+      summary: Restore a soft-deleted form
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { $ref: '#/components/responses/FormResponse' }
+        '404': { $ref: '#/components/responses/ApiError' }
+        '409': { $ref: '#/components/responses/ApiError' }
+  /api/forms/{formId}/permanent:
+    parameters:
+      - { $ref: '#/components/parameters/FormId' }
+    delete:
+      tags: [Forms]
+      operationId: permanentlyDeleteForm
+      summary: Permanently delete an already soft-deleted form and its versions
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [confirmation]
+              properties:
+                confirmation: { const: PERMANENTLY DELETE }
+      responses:
+        '200':
+          description: Deleted identifier
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [deleted]
+                properties:
+                  deleted:
+                    type: object
+                    required: [id]
+                    properties:
+                      id: { type: string, format: uuid }
+        '400': { $ref: '#/components/responses/ApiError' }
+        '404': { $ref: '#/components/responses/ApiError' }
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: dynamix_session
+  parameters:
+    FormId:
+      in: path
+      name: formId
+      required: true
+      schema: { type: string, format: uuid }
+    Version:
+      in: path
+      name: version
+      required: true
+      schema: { type: integer, minimum: 1 }
+  responses:
+    ApiError:
+      description: Error response
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    FormResponse:
+      description: Form record
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [form]
+            properties:
+              form: { $ref: '#/components/schemas/Form' }
+    UserResponse:
+      description: User identity
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [user]
+            properties:
+              user: { $ref: '#/components/schemas/User' }
+    VersionResponse:
+      description: Published version
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [version]
+            properties:
+              version: { $ref: '#/components/schemas/FormVersion' }
+  schemas:
+    ApiError:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: {}
+    User:
+      type: object
+      additionalProperties: false
+      required: [id, email, displayName]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        displayName: { type: string }
+    RegisterInput:
+      type: object
+      additionalProperties: false
+      required: [email, displayName, password]
+      properties:
+        email: { type: string, format: email, example: owner@example.com }
+        displayName: { type: string, minLength: 1, maxLength: 120, example: Form Owner }
+        password:
+          type: string
+          minLength: 12
+          maxLength: 128
+          description: Must contain at least one uppercase letter and one symbol.
+          example: valid-passwordA!
+    LoginInput:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email: { type: string, format: email, example: owner@example.com }
+        password: { type: string, example: valid-passwordA! }
+    CreateFormInput:
+      type: object
+      additionalProperties: false
+      required: [key, title]
+      properties:
+        key: { type: string, minLength: 1, maxLength: 120, example: customer-details }
+        title: { type: string, minLength: 1, maxLength: 200, example: Customer details }
+        schema: { $ref: '#/components/schemas/FormSchema' }
+    SaveDraftInput:
+      type: object
+      additionalProperties: false
+      required: [expectedRevision, schema]
+      properties:
+        expectedRevision: { type: integer, minimum: 1 }
+        title: { type: string, minLength: 1, maxLength: 200 }
+        schema: { $ref: '#/components/schemas/FormSchema' }
+    RevisionInput:
+      type: object
+      additionalProperties: false
+      required: [expectedRevision]
+      properties:
+        expectedRevision: { type: integer, minimum: 1 }
+    FormSchema:
+      type: object
+      description: Validated by @thuraaung2493/dynamic-form-core, including recursive fields and calculations.
+      additionalProperties: false
+      required: [schemaVersion, id, fields]
+      properties:
+        schemaVersion: { const: 1 }
+        id: { type: string, minLength: 1 }
+        title: { type: string }
+        fields:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            required: [name, type, label]
+            properties:
+              name: { type: string }
+              type: { type: string }
+              label: { type: string }
+    FormSummary:
+      type: object
+      required: [id, key, title, draftRevision, createdAt, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        key: { type: string }
+        title: { type: string }
+        draftRevision: { type: integer }
+        currentPublishedVersion: { type: [integer, 'null'] }
+        lastPublishedAt: { type: [string, 'null'], format: date-time }
+        deletedAt: { type: [string, 'null'], format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    Form:
+      allOf:
+        - { $ref: '#/components/schemas/FormSummary' }
+        - type: object
+          required: [ownerId, draftSchema]
+          properties:
+            ownerId: { type: string, format: uuid }
+            draftSchema: { $ref: '#/components/schemas/FormSchema' }
+    VersionSummary:
+      type: object
+      required: [id, version, schemaVersion, publishedBy, publishedAt]
+      properties:
+        id: { type: string, format: uuid }
+        version: { type: integer }
+        schemaVersion: { type: integer }
+        publishedBy: { type: string, format: uuid }
+        publishedAt: { type: string, format: date-time }
+    FormVersion:
+      allOf:
+        - { $ref: '#/components/schemas/VersionSummary' }
+        - type: object
+          required: [formId, schema, createdAt]
+          properties:
+            formId: { type: string, format: uuid }
+            schema: { $ref: '#/components/schemas/FormSchema' }
+            createdAt: { type: string, format: date-time }

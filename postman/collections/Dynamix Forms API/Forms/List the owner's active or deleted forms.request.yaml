@@ -1,0 +1,17 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/forms?deleted=false"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  deleted: "false"
+auth:
+  type: apikey
+  credentials:
+    key: dynamix_session
+    value: "{{apiKey}}"
+    in: header
+settings: {}
+examples: ./.resources/List the owner's active or deleted forms.resources/examples
+order: 1000

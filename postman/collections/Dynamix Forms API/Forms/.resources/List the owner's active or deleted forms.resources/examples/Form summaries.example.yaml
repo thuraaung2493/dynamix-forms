@@ -1,0 +1,50 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/forms?deleted=false"
+  method: GET
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  queryParams:
+    deleted: "false"
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "forms": [
+          {
+            "id": "ff5b73ec-5adb-8358-2097-c01e0b035389",
+            "key": "string",
+            "title": "string",
+            "draftRevision": 6636,
+            "createdAt": "1954-02-26T18:25:44.860Z",
+            "updatedAt": "2008-01-02T17:30:01.089Z",
+            "currentPublishedVersion": 1850,
+            "lastPublishedAt": "2003-04-07T02:14:51.665Z",
+            "deletedAt": "2017-08-04T15:24:01.644Z"
+          },
+          {
+            "id": "6a59d650-13c0-f221-fb1a-68005f680df6",
+            "key": "string",
+            "title": "string",
+            "draftRevision": 8147,
+            "createdAt": "1981-02-21T16:30:39.072Z",
+            "updatedAt": "2025-07-06T10:47:30.035Z",
+            "currentPublishedVersion": 2272,
+            "lastPublishedAt": "2026-05-03T22:12:51.953Z",
+            "deletedAt": "1999-10-21T09:19:56.854Z"
+          }
+        ]
+      }
+order: 1000

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "id": "customer-intake",
+  "title": "Customer Intake",
+  "fields": [
+    {
+      "name": "full_name",
+      "type": "text",
+      "label": "Full name",
+      "required": true,
+      "placeholder": "Jane Doe",
+      "validation": {
+        "minLength": 2,
+        "maxLength": 120
+      }
+    },
+    {
+      "name": "email",
+      "type": "text",
+      "label": "Email address",
+      "required": true,
+      "placeholder": "jane@example.com",
+      "validation": {
+        "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+      }
+    },
+    {
+      "name": "customer_type",
+      "type": "radio",
+      "label": "Customer type",
+      "required": true,
+      "options": [
+        {
+          "label": "Individual",
+          "value": "individual"
+        },
+        {
+          "label": "Business",
+          "value": "business",
+          "fields": [
+            {
+              "name": "company_name",
+              "type": "text",
+              "label": "Company name",
+              "required": true
+            },
+            {
+              "name": "employee_count",
+              "type": "number",
+              "label": "Number of employees",
+              "validation": {
+                "min": 1,
+                "step": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "services",
+      "type": "multiselect",
+      "label": "Services of interest",
+      "options": [
+        {
+          "label": "Consulting",
+          "value": "consulting"
+        },
+        {
+          "label": "Implementation",
+          "value": "implementation"
+        },
+        {
+          "label": "Support",
+          "value": "support"
+        }
+      ]
+    },
+    {
+      "name": "project_budget",
+      "type": "currency",
+      "label": "Project budget",
+      "currencyCode": "USD",
+      "validation": {
+        "min": 0,
+        "step": 100
+      }
+    },
+    {
+      "name": "estimated_total",
+      "type": "calculation",
+      "label": "Estimated total",
+      "readOnly": true,
+      "calculation": {
+        "initialField": "project_budget",
+        "steps": []
+      }
+    },
+    {
+      "name": "preferred_contact",
+      "type": "select",
+      "label": "Preferred contact method",
+      "required": true,
+      "options": [
+        {
+          "label": "Email",
+          "value": "email"
+        },
+        {
+          "label": "Phone",
+          "value": "phone",
+          "fields": [
+            {
+              "name": "phone_number",
+              "type": "text",
+              "label": "Phone number",
+              "required": true,
+              "placeholder": "+1 555 0100"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "start_date",
+      "type": "date",
+      "label": "Preferred start date"
+    },
+    {
+      "name": "additional_notes",
+      "type": "textarea",
+      "label": "Additional notes",
+      "placeholder": "Tell us anything else we should know."
+    },
+    {
+      "name": "terms_accepted",
+      "type": "checkbox",
+      "label": "I agree to be contacted about this request",
+      "required": true
+    }
+  ]
+}

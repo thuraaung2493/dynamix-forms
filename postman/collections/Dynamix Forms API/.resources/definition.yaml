@@ -1,0 +1,5 @@
+$kind: collection
+description: Private form authoring API with one working draft and immutable published versions.
+variables:
+  baseUrl: http://localhost:3001
+  apiKey: ""

@@ -1,0 +1,46 @@
+{
+  "name": "@dynamix-forms/form-builder-api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Dynamix Forms Express API",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"import('node:fs/promises').then(({ rm }) => Promise.all(['dist', '.cache', 'coverage'].map((path) => rm(path, { recursive: true, force: true }))))\"",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/database/migrate.ts",
+    "dev": "tsx watch src/server.ts",
+    "pretest": "npm run build --workspace @thuraaung2493/dynamic-form-core",
+    "pretypecheck": "npm run build --workspace @thuraaung2493/dynamic-form-core",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@thuraaung2493/dynamic-form-core": "0.1.0-beta.0",
+    "argon2": "^0.45.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.9",
+    "drizzle-orm": "^0.45.4",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "drizzle-kit": "^0.31.11",
+    "pg-mem": "^3.0.14",
+    "supertest": "^7.3.1",
+    "tsx": "^4.23.15"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

@@ -1,0 +1,31 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/api/forms/:formId/versions/:version/restore"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: formId
+    value: 5aba8808-fd43-9a01-2a88-a31c002c4ac9
+    disabled: false
+    description: "(Required) "
+  - key: version
+    value: "8327"
+    disabled: false
+    description: "(Required) "
+body:
+  type: json
+  content: |-
+    {
+      "expectedRevision": 180
+    }
+auth:
+  type: apikey
+  credentials:
+    key: dynamix_session
+    value: "{{apiKey}}"
+    in: header
+settings: {}
+examples: ./.resources/Copy a published version into the working draft.resources/examples
+order: 4000

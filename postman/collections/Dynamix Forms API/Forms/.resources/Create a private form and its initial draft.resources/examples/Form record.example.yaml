@@ -1,0 +1,74 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/api/forms"
+  method: POST
+  headers:
+    - key: dynamix_session
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+    - key: Accept
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "key": "customer-details",
+        "title": "Customer details",
+        "schema": {
+          "schemaVersion": {},
+          "id": "string",
+          "fields": [
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "label": "string"
+            }
+          ],
+          "title": "string"
+        }
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "form": {
+          "createdAt": "1970-06-05T01:47:17.961Z",
+          "draftRevision": 6653,
+          "draftSchema": {
+            "schemaVersion": {},
+            "id": "string",
+            "fields": [
+              {
+                "name": "string",
+                "type": "string",
+                "label": "string"
+              },
+              {
+                "name": "string",
+                "type": "string",
+                "label": "string"
+              }
+            ],
+            "title": "string"
+          },
+          "id": "d3438626-661f-3f35-fca9-6b0076db803a",
+          "key": "string",
+          "ownerId": "7f511b02-ecea-b63c-8dbc-b92bc3d27559",
+          "title": "string",
+          "updatedAt": "1969-04-09T09:07:27.105Z",
+          "currentPublishedVersion": 6723,
+          "lastPublishedAt": "1996-12-01T07:50:31.405Z",
+          "deletedAt": "2002-04-05T15:03:10.282Z"
+        }
+      }
+order: 1000
