@@ -30,6 +30,8 @@ npm test
 npm run build
 ```
 
+Pull requests and pushes to `main` run the same checks in [GitHub Actions](./.github/workflows/ci.yml), including dry-run package archives. CI does not publish npm packages or deploy the builder.
+
 `DATABASE_URL` is an ordinary PostgreSQL connection string and works with Neon without provider-specific code. The local web server proxies `/api` to port 3001. The sample schema in [`examples/sample-customer-intake.json`](./examples/sample-customer-intake.json) can be imported into the builder.
 
 ## Implemented product boundaries
