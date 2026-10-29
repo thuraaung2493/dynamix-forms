@@ -23,6 +23,8 @@ npm view @thuraaung2493/dynamic-form-react versions --json
 
 You need publish access to the `thuraaung2493` scope. Do not publish if either package already has version `0.1.0-beta.0`; npm versions cannot be overwritten. Bump **both** package versions and their exact internal dependency references before trying again.
 
+npm also requires account-level two-factor authentication or a suitable granular publishing token for new packages. Enable 2FA in your npm account settings before an interactive publish. Complete the challenge in your own terminal or browser; never put one-time or recovery codes into a repository or chat.
+
 ## Publish in dependency order
 
 Run these commands only when you intend to make the packages public:
