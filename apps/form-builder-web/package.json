@@ -5,12 +5,16 @@
   "description": "Dynamix Forms visual builder web application",
   "type": "module",
   "scripts": {
+    "build:deps": "npm run build --workspace @thuraaung2493/dynamic-form-core && npm run build --workspace @thuraaung2493/dynamic-form-react",
+    "prebuild": "npm run build:deps",
     "build": "tsc -p tsconfig.build.json && vite build",
     "clean": "node -e \"import('node:fs/promises').then(({ rm }) => Promise.all(['dist', '.cache', 'coverage'].map((path) => rm(path, { recursive: true, force: true }))))\"",
     "dev": "vite",
     "preview": "vite preview",
+    "pretest": "npm run build:deps",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "pretypecheck": "npm run build:deps",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
