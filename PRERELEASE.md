@@ -4,6 +4,29 @@ The public packages are `@thuraaung2493/dynamic-form-core` and `@thuraaung2493/d
 
 Both `0.1.0-beta.0` packages were published on 2026-10-29. Do not rerun the publish commands below for this version; npm versions are immutable. Use this checklist after bumping both versions and the React package's exact core dependency for the next prerelease.
 
+## Automated staged beta releases
+
+After [`.github/workflows/npm-release.yml`](./.github/workflows/npm-release.yml) is merged, configure a stage-only npm trusted publisher **for each package**. Use the npm package Settings → Trusted Publisher page (or `npm trust github`) with these exact values:
+
+| Setting | Value |
+| --- | --- |
+| GitHub user | `thuraaung2493` |
+| Repository | `dynamix-forms` |
+| Workflow filename | `npm-release.yml` |
+| Environment | `npm-release` |
+| Allowed action | `npm stage publish` only; do not enable direct `npm publish` |
+
+No `NPM_TOKEN` secret is needed. Configure the trusted publishers close to the first staged release, because npm expires a new configuration if it has no successful publish within two days. The GitHub `npm-release` environment allows deployments only from protected branches; the workflow also refuses to run its jobs outside `main`.
+
+For the next beta release:
+
+1. On a feature branch, bump **both** package versions, the React package's core dependency, both private apps' package dependencies, and `package-lock.json`. Use a new exact version such as `0.1.0-beta.1`. Open a PR and merge only after CI passes.
+2. In GitHub Actions, run **Stage npm beta release** from `main`. Enter that exact version and choose `both`. The workflow checks all local version references, verifies the selected versions are not already public, runs the full prerelease checks, then stages core followed by React. If one stage succeeded and the other failed, correct the problem and rerun with the failed package as the target.
+3. In npm's Staged Packages page, review each tarball and approve **core first, then React** with your own 2FA. The staged versions are not public until approved. You can also use `npm stage list`, `npm stage view <stage-id>`, and `npm stage approve <stage-id>` from your authenticated terminal.
+4. Verify both public `@beta` versions and tags with the commands below. Do not expect the workflow to publish automatically on every merge or to deploy the builder.
+
+The workflow is beta-only. A stable release should use an explicitly reviewed `latest` release flow rather than changing this workflow's default tag.
+
 ## Before publishing
 
 Use Node.js 24 and npm 11. From the repository root:

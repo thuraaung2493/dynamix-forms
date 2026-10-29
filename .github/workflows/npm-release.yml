@@ -1,0 +1,77 @@
+name: Stage npm beta release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact beta version in both package manifests and the lockfile
+        required: true
+        type: string
+      target:
+        description: Stage both packages, or retry one after a partial failure
+        required: true
+        default: both
+        type: choice
+        options: [both, core, react]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-beta-release
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: npm release preflight
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Use repository npm version
+        run: npm install --global npm@11.19.0
+      - name: Install dependencies
+        run: npm ci
+      - name: Check release versions and targets
+        run: node scripts/check-npm-release.mjs
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_TARGET: ${{ inputs.target }}
+          CHECK_NPM_REGISTRY: '1'
+      - name: Run CI checks and inspect package archives
+        run: npm run prerelease:check
+
+  stage:
+    name: stage npm packages
+    needs: preflight
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - name: Use repository npm version
+        run: npm install --global npm@11.19.0
+      - name: Install build dependencies without install scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Stage core with the beta tag
+        if: inputs.target == 'both' || inputs.target == 'core'
+        working-directory: packages/dynamic-form-core
+        run: npm stage publish --access public --tag beta
+      - name: Stage React with the beta tag
+        if: inputs.target == 'both' || inputs.target == 'react'
+        working-directory: packages/dynamic-form-react
+        run: npm stage publish --access public --tag beta
