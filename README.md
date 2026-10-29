@@ -1,5 +1,7 @@
 # Dynamix Forms
 
+<img src="./assets/brand/dynamix-forms-social-preview.jpg" alt="Dynamix Forms branding with branching-field logo and @thuraaung2493" width="640" />
+
 Dynamix Forms is a modular platform for defining, rendering, and visually editing JSON-driven forms. The repository is an npm-workspaces monorepo with independently buildable applications and packages.
 
 ## Workspaces
