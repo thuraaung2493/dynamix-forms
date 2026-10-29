@@ -8,7 +8,7 @@ Render JSON form schemas in React. The package supplies validation and form stat
 npm install @thuraaung2493/dynamic-form-core@beta @thuraaung2493/dynamic-form-react@beta react react-dom
 ```
 
-Use the `beta` tags to install the `0.1.0-beta.0` prereleases rather than any stable `latest` releases.
+Use the `beta` tags to explicitly install the `0.1.0-beta.0` prereleases. Because these are the packages' first releases, npm also points `latest` at them until stable releases are published; unqualified installs currently get the betas too.
 
 The package supports React 18.2 and React 19. Import the default styles once near the root of your application:
 

@@ -2,6 +2,8 @@
 
 The public packages are `@thuraaung2493/dynamic-form-core` and `@thuraaung2493/dynamic-form-react`, both at `0.1.0-beta.0`. The React package depends on the exact same prerelease of core. The builder apps are private and must not be published.
 
+Both `0.1.0-beta.0` packages were published on 2026-10-29. Do not rerun the publish commands below for this version; npm versions are immutable. Use this checklist after bumping both versions and the React package's exact core dependency for the next prerelease.
+
 ## Before publishing
 
 Use Node.js 24 and npm 11. From the repository root:
@@ -34,7 +36,7 @@ npm publish --workspace @thuraaung2493/dynamic-form-core --access public --tag b
 npm publish --workspace @thuraaung2493/dynamic-form-react --access public --tag beta
 ```
 
-The package manifests also set `publishConfig.tag` to `beta`, so an accidental plain `npm publish` from a package workspace will not move the `latest` tag. Publishing is irreversible for a given version; do not use `latest` for this prerelease.
+The package manifests also set `publishConfig.tag` to `beta`, so a plain `npm publish` from a package workspace requests the `beta` tag. Publishing is irreversible for a given version; do not intentionally target `latest` for a prerelease. npm nevertheless created `latest` on the first publication, as noted below.
 
 Verify the published versions and tags:
 
@@ -51,4 +53,4 @@ Consumers can install the prerelease explicitly:
 npm install @thuraaung2493/dynamic-form-core@beta @thuraaung2493/dynamic-form-react@beta
 ```
 
-The `beta` tag is opt-in; a normal install without `@beta` should not select these prerelease versions.
+These are the first published versions of both packages. npm automatically assigned `latest` to `0.1.0-beta.0` as well as `beta`, even though they were published with `--tag beta`. npm rejected removal of `latest` with HTTP 400. Until a stable release is published, an unqualified install also gets this beta; use `@beta` or the exact version to make prerelease intent explicit.

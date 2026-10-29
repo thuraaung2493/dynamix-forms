@@ -6,7 +6,7 @@ Define and validate a form without depending on React or a particular UI. This p
 npm install @thuraaung2493/dynamic-form-core@beta
 ```
 
-Use the `beta` tag to install the `0.1.0-beta.0` prerelease rather than any stable `latest` release.
+Use the `beta` tag to explicitly install the `0.1.0-beta.0` prerelease. Because this is the package's first release, npm also points `latest` at this version until a stable release is published; an unqualified install currently gets the beta too.
 
 ## Schema
 
