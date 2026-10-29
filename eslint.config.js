@@ -9,6 +9,18 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        AbortSignal: 'readonly',
+        URL: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
       'react-hooks': reactHooks,

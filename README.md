@@ -60,7 +60,7 @@ The intended public packages are:
 
 Publishing requires control of the `thuraaung2493` scope on npm; a GitHub account with the same name does not automatically create or grant that npm scope.
 
-The two public packages are at `0.1.0-beta.0`. See [Prerelease publishing](./PRERELEASE.md) for verification, package order, and the explicit `beta`-tagged publish commands.
+The two public packages are at `0.1.0-beta.0`. See [Prerelease publishing](./PRERELEASE.md) for the manual, 2FA-approved npm staging workflow and the current release status.
 
 Package usage and API documentation:
 
