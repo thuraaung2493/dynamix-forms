@@ -46,7 +46,8 @@ describe('Dynamix Forms API', () => {
 
   beforeEach(async () => {
     testDatabase = await createTestDatabase();
-    now = new Date('2026-10-26T08:00:00.000Z');
+    // Supertest's cookie jar checks expiry against the real clock.
+    now = new Date();
   });
 
   afterEach(async () => {
