@@ -10,6 +10,41 @@ Dynamix Forms is a modular platform for defining, rendering, and visually editin
 
 An open-source project by [Thura Aung](https://thuraaung2493.github.io/).
 
+## Installation
+
+Install the beta packages in a React application:
+
+<!-- installation-command:start -->
+
+```bash
+npm install @thuraaung2493/dynamic-form-core@beta @thuraaung2493/dynamic-form-react@beta react react-dom
+```
+
+<!-- installation-command:end -->
+
+See the [React package guide](packages/dynamic-form-react/README.md#installation) for requirements and styling.
+
+## Quick start
+
+```tsx
+import type { FormSchema } from '@thuraaung2493/dynamic-form-core';
+import { DynamicForm } from '@thuraaung2493/dynamic-form-react';
+import '@thuraaung2493/dynamic-form-react/styles.css';
+
+const schema: FormSchema = {
+  schemaVersion: 1,
+  id: 'contact',
+  title: 'Contact',
+  fields: [{ name: 'name', type: 'text', label: 'Name', required: true }],
+};
+
+export function ContactForm() {
+  return <DynamicForm schema={schema} onSubmit={async (values) => console.log(values)} />;
+}
+```
+
+For conditional fields and submission handling, see the [React quick start](packages/dynamic-form-react/README.md#quick-start).
+
 ## Workspaces
 
 - `packages/dynamic-form-core`: framework-independent schema, traversal, defaults, calculations, validation, and submission utilities.

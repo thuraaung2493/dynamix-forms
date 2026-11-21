@@ -1,0 +1,68 @@
+{
+  "sections": [
+    {
+      "label": "Getting started",
+      "items": [
+        {
+          "label": "Overview",
+          "path": "README.md"
+        },
+        {
+          "label": "Installation",
+          "path": "README.md",
+          "anchor": "installation"
+        },
+        {
+          "label": "Quick start",
+          "path": "README.md",
+          "anchor": "quick-start"
+        }
+      ]
+    },
+    {
+      "label": "Guides",
+      "items": [
+        {
+          "label": "React package",
+          "path": "packages/dynamic-form-react/README.md"
+        },
+        {
+          "label": "Core package",
+          "path": "packages/dynamic-form-core/README.md"
+        },
+        {
+          "label": "Visual builder",
+          "path": "apps/form-builder-web/README.md"
+        },
+        {
+          "label": "Builder API",
+          "path": "apps/form-builder-api/README.md"
+        }
+      ]
+    },
+    {
+      "label": "Reference",
+      "items": [
+        {
+          "label": "React components",
+          "path": "packages/dynamic-form-react/README.md",
+          "anchor": "dynamicform-props"
+        },
+        {
+          "label": "Schema fields",
+          "path": "packages/dynamic-form-core/README.md",
+          "anchor": "field-reference"
+        },
+        {
+          "label": "API contract",
+          "path": "apps/form-builder-api/README.md",
+          "anchor": "api-contract"
+        },
+        {
+          "label": "Releases",
+          "path": "PRERELEASE.md"
+        }
+      ]
+    }
+  ]
+}
