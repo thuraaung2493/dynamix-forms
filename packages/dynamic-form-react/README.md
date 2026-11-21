@@ -4,9 +4,7 @@ Render JSON form schemas in React. The package supplies validation and form stat
 
 ## Installation
 
-```bash
-npm install @thuraaung2493/dynamic-form-core@beta @thuraaung2493/dynamic-form-react@beta react react-dom
-```
+See the [installation command](https://github.com/thuraaung2493/dynamix-forms#installation) in the repository overview.
 
 Use the `beta` tags to explicitly install the `0.1.0-beta.0` prereleases. Because these are the packages' first releases, npm also points `latest` at them until stable releases are published; unqualified installs currently get the betas too.
 
